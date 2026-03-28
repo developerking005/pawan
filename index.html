@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SALIM MUMBAI - Professional Cricket Analysis</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #0a0a0a;
+        color: #ffffff;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow-x: hidden;
+      }
+
+      .container {
+        max-width: 420px;
+        width: 100%;
+        padding: 30px 20px;
+        text-align: center;
+        position: relative;
+      }
+
+      /* Floating orbs */
+      .orb {
+        position: fixed;
+        border-radius: 50%;
+        filter: blur(60px);
+        opacity: 0.3;
+        animation: float 6s ease-in-out infinite;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .orb-1 {
+        width: 200px;
+        height: 200px;
+        background: #39ff14;
+        top: 10%;
+        left: -60px;
+        animation-delay: 0s;
+      }
+      .orb-2 {
+        width: 150px;
+        height: 150px;
+        background: #ff2222;
+        top: 50%;
+        right: -50px;
+        animation-delay: 2s;
+      }
+      .orb-3 {
+        width: 180px;
+        height: 180px;
+        background: #ffd700;
+        bottom: 5%;
+        left: 30%;
+        animation-delay: 4s;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0) scale(1);
+        }
+        50% {
+          transform: translateY(-30px) scale(1.1);
+        }
+      }
+
+      /* Profile Image */
+      .profile-wrapper {
+        width: 155px;
+        height: 155px;
+        margin: 0 auto 22px;
+        border-radius: 50%;
+        padding: 5px;
+        background: conic-gradient(#39ff14, #ccff00, #ffd700, #39ff14);
+        box-shadow: 0 0 30px rgba(57, 255, 20, 0.4),
+          0 0 60px rgba(57, 255, 20, 0.15);
+        animation: ring-glow 3s ease-in-out infinite alternate;
+        position: relative;
+        z-index: 1;
+      }
+
+      @keyframes ring-glow {
+        0% {
+          box-shadow: 0 0 20px rgba(57, 255, 20, 0.3),
+            0 0 40px rgba(57, 255, 20, 0.1);
+        }
+        100% {
+          box-shadow: 0 0 35px rgba(57, 255, 20, 0.6),
+            0 0 70px rgba(57, 255, 20, 0.25);
+        }
+      }
+
+      .profile-img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid #111;
+      }
+
+      /* Name */
+      .name {
+        font-size: 28px;
+        font-weight: 800;
+        color: #ffd700;
+        margin-bottom: 4px;
+        text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Members */
+      .members {
+        font-size: 15px;
+        color: #cccccc;
+        margin-bottom: 14px;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Badges */
+      .badges {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 24px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .badge {
+        padding: 6px 18px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: default;
+        animation: badge-pulse 2.5s ease-in-out infinite;
+      }
+
+      .badge-premium {
+        background: rgba(255, 215, 0, 0.12);
+        color: #ffd700;
+        border: 1.5px solid #ffd700;
+        box-shadow: 0 0 12px rgba(255, 215, 0, 0.2);
+      }
+
+      .badge-live {
+        background: rgba(255, 50, 50, 0.12);
+        color: #ff4444;
+        border: 1.5px solid #ff4444;
+        box-shadow: 0 0 12px rgba(255, 50, 50, 0.2);
+        animation-delay: 0.5s;
+      }
+
+      @keyframes badge-pulse {
+        0%,
+        100% {
+          box-shadow: 0 0 8px rgba(255, 215, 0, 0.15);
+        }
+        50% {
+          box-shadow: 0 0 20px rgba(255, 215, 0, 0.35);
+        }
+      }
+
+      /* Stats */
+      .stats {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 24px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .stat-card {
+        flex: 1;
+        padding: 18px 10px;
+        border-radius: 12px;
+        border: 1.5px solid;
+        text-align: center;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .stat-card:hover {
+        transform: scale(1.05);
+      }
+
+      .stat-win {
+        border-color: #ff2222;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 0, 0, 0.1),
+          rgba(0, 0, 0, 0)
+        );
+        box-shadow: 0 0 15px rgba(255, 0, 0, 0.15);
+      }
+      .stat-win:hover {
+        box-shadow: 0 0 25px rgba(255, 0, 0, 0.35);
+      }
+
+      .stat-rating {
+        border-color: #1a5c1a;
+        background: linear-gradient(
+          135deg,
+          rgba(0, 100, 0, 0.1),
+          rgba(0, 0, 0, 0)
+        );
+        box-shadow: 0 0 15px rgba(0, 200, 0, 0.1);
+      }
+      .stat-rating:hover {
+        box-shadow: 0 0 25px rgba(0, 200, 0, 0.3);
+      }
+
+      .stat-value {
+        font-size: 30px;
+        font-weight: 800;
+        color: #ffd700;
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+      }
+
+      .stat-label {
+        font-size: 13px;
+        color: #aaa;
+        margin-top: 2px;
+      }
+
+      .stats-divider {
+        width: 3px;
+        background: linear-gradient(to bottom, #ff0000, #ff4444, #ff0000);
+        border-radius: 2px;
+        align-self: center;
+        height: 50px;
+        box-shadow: 0 0 12px rgba(255, 0, 0, 0.6);
+        animation: divider-pulse 2s ease-in-out infinite;
+      }
+
+      @keyframes divider-pulse {
+        0%,
+        100% {
+          box-shadow: 0 0 8px rgba(255, 0, 0, 0.4);
+        }
+        50% {
+          box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+        }
+      }
+
+      /* Telegram Button */
+      .telegram-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        padding: 16px;
+        border: none;
+        border-radius: 14px;
+        background: linear-gradient(90deg, #39ff14, #ff2222);
+        color: #111;
+        font-size: 20px;
+        font-weight: 700;
+        cursor: pointer;
+        margin-bottom: 24px;
+        text-decoration: none;
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+        transition: transform 0.2s;
+        animation: btn-glow 2s ease-in-out infinite alternate;
+      }
+
+      @keyframes btn-glow {
+        0% {
+          box-shadow: 0 0 15px rgba(57, 255, 20, 0.4),
+            0 0 30px rgba(57, 255, 20, 0.15);
+        }
+        100% {
+          box-shadow: 0 0 30px rgba(57, 255, 20, 0.7),
+            0 0 60px rgba(255, 34, 34, 0.3), 0 0 80px rgba(57, 255, 20, 0.2);
+        }
+      }
+
+      .telegram-btn::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+          45deg,
+          transparent,
+          rgba(255, 255, 255, 0.15),
+          transparent
+        );
+        animation: shimmer 3s infinite;
+      }
+
+      @keyframes shimmer {
+        0% {
+          transform: translateX(-100%) rotate(45deg);
+        }
+        100% {
+          transform: translateX(100%) rotate(45deg);
+        }
+      }
+
+      .telegram-btn:hover {
+        transform: scale(1.04);
+      }
+
+      .telegram-btn svg {
+        width: 24px;
+        height: 24px;
+        fill: #111;
+        filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.3));
+      }
+
+      /* Trust Badges */
+      .trust-box {
+        border: 1.5px solid #ccff00;
+        border-radius: 14px;
+        padding: 20px;
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 28px;
+        background: rgba(50, 80, 20, 0.08);
+        position: relative;
+        z-index: 1;
+        box-shadow: 0 0 15px rgba(204, 255, 0, 0.1);
+        animation: trust-glow 3s ease-in-out infinite alternate;
+      }
+
+      @keyframes trust-glow {
+        0% {
+          box-shadow: 0 0 10px rgba(204, 255, 0, 0.08);
+        }
+        100% {
+          box-shadow: 0 0 25px rgba(204, 255, 0, 0.2);
+        }
+      }
+
+      .trust-item {
+        text-align: center;
+      }
+
+      .trust-icon {
+        font-size: 30px;
+        margin-bottom: 6px;
+        display: inline-block;
+        animation: icon-bounce 2s ease-in-out infinite;
+      }
+
+      .trust-item:nth-child(2) .trust-icon {
+        animation-delay: 0.3s;
+      }
+      .trust-item:nth-child(3) .trust-icon {
+        animation-delay: 0.6s;
+      }
+      .trust-item:nth-child(4) .trust-icon {
+        animation-delay: 0.9s;
+      }
+
+      @keyframes icon-bounce {
+        0%,
+        100% {
+          transform: translateY(0) scale(1);
+        }
+        50% {
+          transform: translateY(-6px) scale(1.15);
+        }
+      }
+
+      .trust-label {
+        font-size: 12px;
+        color: #cccccc;
+        font-weight: 600;
+      }
+
+      /* Footer */
+      .footer {
+        font-size: 12px;
+        color: #666;
+        line-height: 1.8;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Floating particles */
+      .particle {
+        position: fixed;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 0;
+        animation: particle-float linear infinite;
+      }
+
+      @keyframes particle-float {
+        0% {
+          transform: translateY(100vh) scale(0);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        90% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-10vh) scale(1);
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Floating orbs -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <div class="container">
+      <div class="profile-wrapper">
+        <img src="pawan.png" alt="PAWAN JAIPUR" class="profile-img" />
+      </div>
+
+      <h1 class="name"><span>🏏</span> PAWAN JAIPUR</h1>
+      <p class="members"><span>👥</span> 1L+ Family Members</p>
+
+      <div class="badges">
+        <span class="badge badge-premium">🏆 Premium Analyst</span>
+        <span class="badge badge-live">⚡ Live Updates</span>
+      </div>
+
+      <div class="stats">
+        <div class="stat-card stat-win">
+          <div class="stat-value">96%</div>
+          <div class="stat-label">Win Rate</div>
+        </div>
+        <div class="stats-divider"></div>
+        <div class="stat-card stat-rating">
+          <div class="stat-value">4.3★</div>
+          <div class="stat-label">Rating</div>
+        </div>
+      </div>
+
+      <a
+        href="https://t.me/+5LdrqHPocj5hM2Q1"
+        class="telegram-btn"
+        onclick="alert('Telegram link goes here!')"
+      >
+        <svg viewBox="0 0 24 24">
+          <path
+            d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"
+          />
+        </svg>
+        Join Telegram Channel
+      </a>
+
+      <div class="trust-box">
+        <div class="trust-item">
+          <div class="trust-icon">✅</div>
+          <div class="trust-label">Verified</div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">🔒</div>
+          <div class="trust-label">Secure</div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">📈</div>
+          <div class="trust-label">Profitable</div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">⭐</div>
+          <div class="trust-label">Top Rated</div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p>© 2024 SALIM MUMBAI. All rights reserved.</p>
+        <p>🏏 Professional Cricket Analysis</p>
+      </div>
+    </div>
+
+    <script>
+      // Create floating particles
+      const colors = ["#39ff14", "#ffd700", "#ff2222", "#ccff00"];
+      for (let i = 0; i < 15; i++) {
+        const p = document.createElement("div");
+        p.className = "particle";
+        p.style.left = Math.random() * 100 + "vw";
+        p.style.width = p.style.height = 3 + Math.random() * 5 + "px";
+        p.style.background = colors[Math.floor(Math.random() * colors.length)];
+        p.style.boxShadow = "0 0 8px " + p.style.background;
+        p.style.animationDuration = 6 + Math.random() * 8 + "s";
+        p.style.animationDelay = Math.random() * 10 + "s";
+        document.body.appendChild(p);
+      }
+    </script>
+  </body>
+</html>
